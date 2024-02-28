@@ -29,4 +29,11 @@ offset_bottom = 371.0
 text = "Begin"
 script = ExtResource("1_5s5pc")
 
+[node name="Label" type="Label" parent="."]
+offset_left = 494.0
+offset_top = 261.0
+offset_right = 681.0
+offset_bottom = 284.0
+text = "Hit the other food Items"
+
 [connection signal="pressed" from="Control/btnPlay" to="Control/btnPlay" method="_on_pressed"]

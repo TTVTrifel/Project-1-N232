@@ -1,0 +1,144 @@
+[gd_scene load_steps=18 format=3 uid="uid://dae2qa78j827g"]
+
+[ext_resource type="Script" path="res://scenes/AudioManager.gd" id="1_aatjn"]
+[ext_resource type="Texture2D" uid="uid://c3v4bsghm1mfx" path="res://Art/background.png" id="1_p5ehe"]
+[ext_resource type="Texture2D" uid="uid://c5vju6xkt2ac4" path="res://Art/MicroWave.png" id="2_wjd72"]
+[ext_resource type="Texture2D" uid="uid://cl50joc6su47g" path="res://Art/door.JPG" id="3_78mad"]
+[ext_resource type="Script" path="res://scripts/Birdscript.gd" id="4_e1evh"]
+[ext_resource type="Texture2D" uid="uid://cqn7rqhpq7h5a" path="res://Art/potato.png" id="5_ysac0"]
+[ext_resource type="AudioStream" uid="uid://bhojs7k7wd1wa" path="res://Art/onlymp3.to - squish___sound_effect-iWugthMcbmY-192k-1709137393.mp3" id="6_vw8ut"]
+[ext_resource type="Script" path="res://scripts/Sus.gd" id="6_xl8rp"]
+[ext_resource type="Script" path="res://scripts/UI.gd" id="8_11r43"]
+[ext_resource type="Script" path="res://scenes/scoreVal.gd" id="9_niuwq"]
+[ext_resource type="PackedScene" uid="uid://j6ces252of1p" path="res://DeathParticle.tscn" id="9_yw71o"]
+[ext_resource type="Texture2D" uid="uid://ba1yem7fbasov" path="res://Art/Salad.png" id="10_85m3o"]
+[ext_resource type="PackedScene" uid="uid://d10wpgk0dbtt4" path="res://gameObjects/wall.tscn" id="10_njd7p"]
+[ext_resource type="Script" path="res://scenes/Button.gd" id="11_sk8eo"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6x6v0"]
+radius = 30.0856
+height = 99.2437
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0fjj1"]
+size = Vector2(1182, 41)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_280fk"]
+radius = 47.0425
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_aatjn")
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(579, 318)
+scale = Vector2(0.802083, 0.479167)
+texture = ExtResource("1_p5ehe")
+
+[node name="MicroWave" type="Sprite2D" parent="."]
+position = Vector2(193, 102)
+scale = Vector2(0.314453, 0.314453)
+texture = ExtResource("2_wjd72")
+
+[node name="Door" type="Sprite2D" parent="."]
+position = Vector2(962, 504)
+scale = Vector2(0.706731, 0.886129)
+texture = ExtResource("3_78mad")
+
+[node name="Potato" type="RigidBody2D" parent="." groups=["Player"]]
+position = Vector2(176, 93)
+max_contacts_reported = 5
+contact_monitor = true
+script = ExtResource("4_e1evh")
+stream = ExtResource("6_vw8ut")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Potato"]
+rotation = 1.14306
+scale = Vector2(0.377884, 0.377884)
+shape = SubResource("CapsuleShape2D_6x6v0")
+
+[node name="Potato" type="Sprite2D" parent="Potato/CollisionShape2D"]
+rotation = -1.14306
+scale = Vector2(0.0728012, 0.0728012)
+texture = ExtResource("5_ysac0")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(11, 670)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(571, 0)
+shape = SubResource("RectangleShape2D_0fjj1")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(571, -718)
+shape = SubResource("RectangleShape2D_0fjj1")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(1164, -363)
+rotation = -1.57079
+shape = SubResource("RectangleShape2D_0fjj1")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(-30, -402)
+rotation = -1.57079
+shape = SubResource("RectangleShape2D_0fjj1")
+
+[node name="enemy" type="RigidBody2D" parent="."]
+position = Vector2(720, 462)
+max_contacts_reported = 1
+contact_monitor = true
+script = ExtResource("6_xl8rp")
+deathParticle = ExtResource("9_yw71o")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="enemy"]
+shape = SubResource("CircleShape2D_280fk")
+
+[node name="Sprite2D" type="Sprite2D" parent="enemy"]
+position = Vector2(1.99999, 6)
+scale = Vector2(0.229495, 0.229492)
+texture = ExtResource("10_85m3o")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 1026.0
+offset_top = 15.0
+offset_right = 1066.0
+offset_bottom = 55.0
+scale = Vector2(4.84, 4.84)
+script = ExtResource("8_11r43")
+
+[node name="Score;" type="Label" parent="UI"]
+layout_mode = 0
+offset_left = -11.5702
+offset_right = 36.4298
+offset_bottom = 23.0
+scale = Vector2(0.467698, 0.467698)
+text = "Score:"
+
+[node name="scoreVal" type="Label" parent="UI"]
+layout_mode = 0
+offset_left = 11.5702
+offset_right = 51.5702
+offset_bottom = 23.0
+scale = Vector2(0.467698, 0.467698)
+text = "1"
+script = ExtResource("9_niuwq")
+
+[node name="Desk" parent="." instance=ExtResource("10_njd7p")]
+position = Vector2(615, 519)
+
+[node name="Desk2" parent="." instance=ExtResource("10_njd7p")]
+position = Vector2(126, 524)
+
+[node name="Button" type="Button" parent="."]
+offset_left = 499.0
+offset_right = 613.0
+offset_bottom = 31.0
+scale = Vector2(1.76, 1.76)
+text = "Back to Menu"
+script = ExtResource("11_sk8eo")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+
+[connection signal="body_entered" from="Potato" to="Potato" method="_on_body_entered"]
+[connection signal="body_entered" from="enemy" to="enemy" method="_on_body_entered"]
+[connection signal="button_down" from="Button" to="Button" method="_on_button_down"]
